@@ -1,0 +1,25 @@
+/* responsive.css — Doplňkové media queries (většina layoutu je mobile-first v main/components) */
+
+/* ═══ MOBILE (< 640px) ═══ */
+@media (max-width: 639px) {
+  .section-head-row { flex-direction: column; align-items: flex-start; }
+  .footer-bottom { flex-direction: column; }
+  .detail-sidebar { position: static; }
+  .filter-row { align-items: stretch; }
+  .filter-row .select-wrap { flex: 1 1 45%; }
+  .filter-row .select-wrap select { width: 100%; }
+}
+
+/* ═══ TABLET (640–1023px) ═══ */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .properties-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ═══ PRINT ═══ */
+@media print {
+  .site-header, .site-footer, .floating-phone, .cookie-banner,
+  .mobile-nav, .hamburger, .btn, .marquee { display: none !important; }
+  body { background: #fff; color: #000; }
+  .page-hero, .section-dark { background: #fff; color: #000; }
+  .page-hero h1 { color: #000; }
+}

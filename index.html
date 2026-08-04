@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SRDCE REALIT — Eva Vorrethová | Realitní kancelář Prostějov</title>
+  <meta name="description" content="Realitní kancelář Srdce Realit — Eva Vorrethová, Prostějov. Prodej domů, bytů a pozemků, pronájmy. Osobní přístup, kompletní servis.">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    /* ── HOMEPAGE ── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--ink);
+      color: var(--text-inv);
+      overflow: hidden;
+      padding: calc(var(--header-h) + 3rem) 0 4rem;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c1/Pohled_z_veze_radnice_na_zizkovo_namesti.jpg');
+      background-size: cover;
+      background-position: center 55%;
+      opacity: .38;
+      mask-image: linear-gradient(105deg, transparent 0%, rgba(0,0,0,.4) 35%, #000 70%);
+      -webkit-mask-image: linear-gradient(105deg, transparent 0%, rgba(0,0,0,.4) 35%, #000 70%);
+    }
+    .hero-glow {
+      position: absolute;
+      top: -30%;
+      right: -15%;
+      width: 70%;
+      aspect-ratio: 1;
+      background: radial-gradient(circle, rgba(215,32,43,.28), transparent 62%);
+      pointer-events: none;
+    }
+    .hero-grid-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 80% 90% at 30% 40%, #000 20%, transparent 72%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 90% at 30% 40%, #000 20%, transparent 72%);
+      pointer-events: none;
+    }
+    .hero .container { position: relative; z-index: 1; }
+    .hero-content { max-width: 780px; }
+    .hero h1 {
+      color: var(--text-inv);
+      margin: var(--space-5) 0 var(--space-6);
+    }
+    .hero h1 .accent {
+      display: block;
+      background: linear-gradient(100deg, #FF6B72, var(--red-bright) 55%, #C41722);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 1.7vw, 1.2rem);
+      color: var(--text-inv-2);
+      max-width: 54ch;
+      line-height: 1.75;
+      margin-bottom: var(--space-8);
+    }
+    .hero-btns { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-bottom: clamp(2.5rem, 6vh, 4.5rem); }
+    .hero-stats {
+      border-top: 1px solid var(--line-dark);
+      padding-top: var(--space-8);
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .6em;
+      padding: .45em 1.1em .45em .6em;
+      border-radius: var(--radius-full);
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line-dark);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      font-size: .82rem;
+      color: var(--text-inv-2);
+    }
+    .hero-badge .pulse-dot {
+      position: relative;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: rgba(121,188,28,.18);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-badge .pulse-dot::after {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    /* O makléřce */
+    .about-split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(2.5rem, 5vw, 4.5rem);
+      align-items: center;
+    }
+    @media (min-width: 1024px) { .about-split { grid-template-columns: 1.1fr 1fr; } }
+    .about-photo-wrap { position: relative; }
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      border-radius: var(--radius-xl);
+      display: block;
+    }
+    .about-photo-card {
+      position: absolute;
+      left: clamp(-1rem, -2vw, -2rem);
+      bottom: 2rem;
+      background: rgba(12,14,19,.86);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--line-dark);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5) var(--space-6);
+      color: var(--text-inv);
+      box-shadow: var(--shadow-lg);
+      max-width: 260px;
+    }
+    .about-photo-card strong { font-family: var(--font-display); display: block; margin-bottom: 2px; }
+    .about-photo-card span { font-size: .8rem; color: var(--text-inv-2); }
+    .about-text p { color: var(--text-2); line-height: 1.8; margin-bottom: var(--space-4); }
+    .about-values {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+      margin: var(--space-6) 0 var(--space-8);
+    }
+    @media (max-width: 520px) { .about-values { grid-template-columns: 1fr; } }
+    .about-value {
+      display: flex;
+      align-items: center;
+      gap: .7em;
+      font-size: .9rem;
+      font-weight: 500;
+    }
+    .about-value svg { width: 18px; height: 18px; color: var(--red); flex-shrink: 0; }
+
+    /* CTA banner */
+    .cta-banner {
+      position: relative;
+      background: var(--gradient-brand);
+      color: #fff;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(ellipse at 70% 50%, #000 20%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at 70% 50%, #000 20%, transparent 75%);
+    }
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+      align-items: center;
+      padding-block: clamp(3.5rem, 7vw, 5.5rem);
+    }
+    @media (min-width: 900px) { .cta-inner { grid-template-columns: 1.5fr 1fr; } }
+    .cta-inner h2 { color: #fff; margin-bottom: var(--space-4); }
+    .cta-inner p { color: rgba(255,255,255,.85); max-width: 48ch; line-height: 1.7; }
+    .cta-actions { display: flex; flex-direction: column; gap: var(--space-4); align-items: flex-start; }
+    @media (min-width: 900px) { .cta-actions { align-items: flex-end; } }
+    .cta-phone {
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 4vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .cta-phone:hover { text-decoration: underline; text-underline-offset: 6px; }
+
+    /* Kontakt */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(2rem, 4vw, 3.5rem);
+      align-items: start;
+    }
+    @media (min-width: 1024px) { .contact-grid { grid-template-columns: 1fr 1.2fr; } }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner container-wide">
+    <a href="index.html" class="site-logo" aria-label="SRDCE REALIT — úvodní stránka">
+      <div class="logo-img-wrap">
+        <img src="assets/logo.png" alt="SRDCE REALIT — Eva Vorrethová" class="logo-img">
+      </div>
+    </a>
+    <nav class="main-nav" aria-label="Hlavní navigace">
+      <ul class="nav-list">
+        <li><a href="#o-mne">O mně</a></li>
+        <li><a href="#sluzby">Služby</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+        <li><a href="https://www.sreality.cz/adresar/srdce-realit-prostejov/3274/inzeraty" target="_blank" rel="noopener">Nabídka nemovitostí</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="tel:+420605011310" class="header-phone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.08 6.08l.97-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        605 011 310
+      </a>
+      <button class="hamburger" aria-label="Otevřít menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="scroll-progress"><span></span></div>
+</header>
+
+<nav class="mobile-nav" aria-label="Mobilní navigace">
+  <ul class="mobile-nav-list">
+    <li><a href="#o-mne">O mně</a></li>
+    <li><a href="#sluzby">Služby</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+    <li><a href="https://www.sreality.cz/adresar/srdce-realit-prostejov/3274/inzeraty" target="_blank" rel="noopener">Nabídka nemovitostí</a></li>
+  </ul>
+  <a href="tel:+420605011310" class="mobile-nav-phone">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.08 6.08l.97-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    605 011 310
+  </a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-grid-pattern"></div>
+  <div class="container">
+    <div class="hero-content">
+      <span class="hero-badge">
+        <span class="pulse-dot"></span>
+        <span>Jsem lokální makléřka v Prostějově</span>
+      </span>
+      <h1 class="display-1">Koupě či prodej nemovitosti
+        <span class="accent">je srdcová záležitost.</span>
+      </h1>
+      <p class="hero-subtitle">Jsem lokální makléřka v Prostějově. Osobní přístup, dlouholeté zkušenosti a kompletní právní i finanční servis zajistím od ocenění až po předání klíčů.</p>
+      <div class="hero-btns">
+        <a href="https://www.sreality.cz/adresar/srdce-realit-prostejov/3274/inzeraty" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Aktuální nabídka na Sreality.cz
+        </a>
+        <a href="#kontakt" class="btn btn-outline-white btn-lg">Nezávazná konzultace</a>
+      </div>
+      <div class="hero-stats stats-row">
+        <div class="stat-item">
+          <div class="stat-value"><span data-count="15">0</span><span class="suffix">+</span></div>
+          <div class="stat-label">let na trhu</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><span data-count="100">0</span><span class="suffix">+</span></div>
+          <div class="stat-label">spokojených klientů</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">1<span class="suffix">:1</span></div>
+          <div class="stat-label">osobní přístup</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ O MAKLÉŘCE ══ -->
+<section class="section section-alt" id="o-mne">
+  <div class="container">
+    <div class="about-split">
+      <div class="about-photo-wrap animate-on-scroll">
+        <img
+          src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1000&q=80"
+          alt="Realitní kancelář SRDCE REALIT — Prostějov"
+          class="about-photo"
+          loading="lazy">
+        <div class="about-photo-card">
+          <strong>Eva Vorrethová</strong>
+          <span>odpovědný vedoucí a makléřka<br>SRDCE REALIT s.r.o.</span>
+        </div>
+      </div>
+      <div class="about-text">
+        <span class="eyebrow animate-on-scroll">Kdo se o vás postará</span>
+        <h2 class="display-2 animate-on-scroll" style="margin:var(--space-4) 0 var(--space-5)">Jsem jenom já.<br>Žádné přehazování.</h2>
+        <p class="animate-on-scroll">Pracuji na základě praktických zkušeností s prodejem nejrůznějších nemovitostí. Bydlení je jedna z nejdůležitějších lidských potřeb — a koupě či prodej nemovitosti je pro mnohé srdcová záležitost.</p>
+        <p class="animate-on-scroll">Celý obchod vedu od začátku do konce sama. Znáte moje jméno, znáte moji tvář, máte na mě přímé číslo. Kompletní servis zahrnuje právní poradenství ve spolupráci s advokátní kanceláří, znalecké posudky i zajištění financování.</p>
+        <div class="about-values">
+          <div class="about-value animate-on-scroll">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Čestné a korektní jednání
+          </div>
+          <div class="about-value animate-on-scroll animate-delay-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Individuální lidský přístup
+          </div>
+          <div class="about-value animate-on-scroll animate-delay-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Flexibilita a dostupnost
+          </div>
+          <div class="about-value animate-on-scroll animate-delay-3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Spokojenost obou stran
+          </div>
+        </div>
+        <div style="display:flex;gap:var(--space-3);flex-wrap:wrap">
+          <a href="tel:+420605011310" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.08 6.08l.97-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            605 011 310
+          </a>
+          <a href="#kontakt" class="btn btn-secondary">Napsat zprávu</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SLUŽBY ══ -->
+<section class="section section-dark" id="sluzby">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow eyebrow-inv animate-on-scroll">Kompletní servis</span>
+      <h2 class="display-2 animate-on-scroll">Vše zařídím za vás</h2>
+      <p class="lead animate-on-scroll animate-delay-1">Od první konzultace po předání klíčů. Jedno místo, jeden kontakt, nulové starosti.</p>
+    </div>
+    <div class="feature-grid feature-grid-3">
+      <div class="feature-card feature-card-dark animate-on-scroll">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Odhad tržní ceny</h3>
+        <p>Analýza trhu a stanovení optimální ceny, která přiláká vážné zájemce a maximalizuje váš výnos.</p>
+      </div>
+      <div class="feature-card feature-card-dark animate-on-scroll animate-delay-1">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.2"/><path d="M17.5 8.5h.01"/></svg>
+        </div>
+        <h3>Profesionální prezentace</h3>
+        <p>Kvalitní fotodokumentace a inzerce na Sreality.cz a dalších portálech — oslovím maximum zájemců.</p>
+      </div>
+      <div class="feature-card feature-card-dark animate-on-scroll animate-delay-2">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </div>
+        <h3>Organizace prohlídek</h3>
+        <p>Veškerou komunikaci se zájemci i organizaci prohlídek beru na sebe. Šetřím váš čas i nervy.</p>
+      </div>
+      <div class="feature-card feature-card-dark animate-on-scroll">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <h3>Kompletní právní servis</h3>
+        <p>Rezervační i kupní smlouvy ve spolupráci s ověřenou advokátní kanceláří. Vaše zájmy jsou chráněny.</p>
+      </div>
+      <div class="feature-card feature-card-dark animate-on-scroll animate-delay-1">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a5 5 0 0 1 10 0v2"/><circle cx="12" cy="14" r="2"/></svg>
+        </div>
+        <h3>Bezpečná úschova peněz</h3>
+        <p>Advokátní, bankovní nebo notářská úschova kupní ceny až do splnění všech podmínek převodu.</p>
+      </div>
+      <div class="feature-card feature-card-dark animate-on-scroll animate-delay-2">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>
+        </div>
+        <h3>Hypotéky a financování</h3>
+        <p>Spolupracuji s hypotečními specialisty a bankami. Zajistím financování i pojištění nemovitosti.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section class="cta-banner">
+  <div class="container cta-inner">
+    <div>
+      <span class="eyebrow animate-on-scroll" style="color:rgba(255,255,255,.85)">Prodáváte nebo pronajímáte?</span>
+      <h2 class="display-2 animate-on-scroll" style="margin-top:var(--space-4)">Poradím, ocením,<br>zařídím.</h2>
+      <p class="animate-on-scroll animate-delay-1">Zavolejte nebo napište — první konzultace a odhad ceny nemovitosti jsou nezávazné a zdarma.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="tel:+420605011310" class="cta-phone animate-on-scroll">605 011 310</a>
+      <a href="#kontakt" class="btn btn-white btn-lg animate-on-scroll animate-delay-1">Napsat zprávu</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ KONTAKT ══ -->
+<section class="section" id="kontakt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow animate-on-scroll">Jsem tu pro vás</span>
+      <h2 class="display-2 animate-on-scroll">Kancelář v centru Prostějova</h2>
+      <p class="lead animate-on-scroll animate-delay-1">Zavolejte, napište nebo se zastavte osobně. Schůzky domlouvám dle telefonické dohody — víkendy nevyjímaje.</p>
+    </div>
+    <div class="contact-grid">
+
+      <!-- Levá strana: info + formulář -->
+      <div style="display:flex;flex-direction:column;gap:var(--space-6)">
+        <div class="contact-card animate-on-scroll">
+          <p style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;margin-bottom:var(--space-1)">SRDCE REALIT s.r.o.</p>
+          <p style="color:var(--text-2);margin-bottom:var(--space-6)">Eva Vorrethová — odpovědný vedoucí</p>
+          <div class="contact-list">
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div>
+                Vojáčkovo nám. č. 3, 796 01 Prostějov<br>
+                <small style="color:var(--text-3)">vchod z ulice Vápenice, naproti Městskému divadlu</small>
+              </div>
+            </div>
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.08 6.08l.97-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <a href="tel:+420605011310">605 011 310</a>
+            </div>
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <a href="mailto:info@srdcerealit.cz">info@srdcerealit.cz</a>
+            </div>
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Schůzky dle telefonické dohody</span>
+            </div>
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M8 6h.01M12 6h.01M16 6h.01"/></svg>
+              <span>IČ: 76340180</span>
+            </div>
+          </div>
+          <a href="https://www.sreality.cz/adresar/srdce-realit-prostejov/3274/inzeraty" target="_blank" rel="noopener" class="link-arrow" style="margin-top:var(--space-6)">
+            Můj profil na Sreality.cz
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+
+        <div class="contact-card animate-on-scroll animate-delay-1">
+          <h2 class="display-3" style="margin-bottom:var(--space-6)">Napište mi</h2>
+          <div class="form-wrap">
+            <form class="contact-form" novalidate>
+              <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="contact-name">Jméno a příjmení <span class="req">*</span></label>
+                    <input type="text" class="form-input" id="contact-name" name="name" placeholder="Vaše jméno" required autocomplete="name">
+                    <span class="form-error"></span>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="contact-phone">Telefon <span class="req">*</span></label>
+                    <input type="tel" class="form-input" id="contact-phone" name="phone" placeholder="123 456 789" required autocomplete="tel">
+                    <span class="form-error"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="contact-email">E-mail</label>
+                  <input type="email" class="form-input" id="contact-email" name="email" placeholder="vas@email.cz" autocomplete="email">
+                  <span class="form-error"></span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="contact-msg">Zpráva <span class="req">*</span></label>
+                  <textarea class="form-textarea" id="contact-msg" name="message" placeholder="O co se zajímáte, s čím potřebujete pomoct…" required></textarea>
+                  <span class="form-error"></span>
+                </div>
+                <div class="form-group">
+                  <label class="form-check">
+                    <input type="checkbox" name="gdpr" required>
+                    <span>Souhlasím se <a href="ochrana-udaju.html" target="_blank">zpracováním osobních údajů</a> v souladu s GDPR. Údaje zpracuji pouze za účelem odpovědi na váš dotaz. <span class="req">*</span></span>
+                  </label>
+                  <span class="form-error"></span>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                  Odeslat zprávu
+                </button>
+              </div>
+            </form>
+            <div class="form-success">
+              <strong>Zpráva úspěšně odeslána</strong>
+              Děkuji za váš zájem. Ozvu se vám co nejdříve, obvykle do 24 hodin.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pravá strana: mapa -->
+      <div class="animate-on-scroll animate-delay-2" style="position:sticky;top:calc(var(--header-h) + 20px)">
+        <iframe
+          class="map-embed"
+          src="https://mapy.com/cs/zakladni?x=17.115052&y=49.473857&z=17&source=coor&id=17.115052%2C49.473857&frame=1"
+          height="460"
+          title="SRDCE REALIT — poloha kanceláře"
+          loading="lazy"
+          allowfullscreen
+        ></iframe>
+        <div class="contact-card" style="margin-top:var(--space-4);padding:var(--space-5);border-left:3px solid var(--red)">
+          <p style="font-size:.9rem;color:var(--text-2);line-height:1.7">
+            <strong style="display:block;color:var(--text);margin-bottom:4px">Jak mě najdete</strong>
+            Kancelář se nachází v centru Prostějova na Vojáčkově náměstí č. 3. Vchod je z ulice Vápenice — naproti Městskému divadlu, v budově Prostějovského DENÍKU.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="site-logo" style="display:inline-flex">
+          <div class="logo-img-wrap">
+            <img src="assets/logo.png" alt="SRDCE REALIT — Eva Vorrethová" class="logo-img">
+          </div>
+        </a>
+        <p class="footer-tagline">Jsem vaše lokální realitní makléřka v Prostějově a okolí. Osobní přístup, kompletní servis, dlouholeté zkušenosti.</p>
+      </div>
+      <div>
+        <p class="footer-heading">Navigace</p>
+        <nav class="footer-links">
+          <a href="#o-mne">O mně</a>
+          <a href="#sluzby">Služby</a>
+          <a href="#kontakt">Kontakt</a>
+          <a href="https://www.sreality.cz/adresar/srdce-realit-prostejov/3274/inzeraty" target="_blank" rel="noopener">Nabídka nemovitostí</a>
+          <a href="ochrana-udaju.html">Ochrana osobních údajů</a>
+        </nav>
+      </div>
+      <div>
+        <p class="footer-heading">Kontakt</p>
+        <div class="footer-contact-list">
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Vojáčkovo nám. č. 3<br>796 01 Prostějov</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.08 6.08l.97-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+420605011310">605 011 310</a>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:info@srdcerealit.cz">info@srdcerealit.cz</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2011–2026 Eva Vorrethová – SRDCE REALIT | IČ: 76340180</p>
+      <p><a href="https://www.srdcerealit.cz">www.srdcerealit.cz</a> | <a href="ochrana-udaju.html">Ochrana osobních údajů</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING PHONE -->
+<a href="tel:+420605011310" class="floating-phone" aria-label="Zavolat 605 011 310">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.08 6.08l.97-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+</a>
+
+<!-- COOKIE BANNER -->
+<div id="cookie-banner" class="cookie-banner" role="region" aria-label="Informace o cookies">
+  <div class="cookie-banner-inner">
+    <div class="cookie-banner-text">
+      <strong>Tento web používá pouze technické cookies</strong>
+      Technické cookies jsou nezbytné pro správné fungování webu a nevyžadují váš souhlas. Nesleduji vás ani nevyužívám marketingové nástroje.
+      <a href="ochrana-udaju.html">Více informací o ochraně osobních údajů</a>
+    </div>
+    <div class="cookie-banner-actions">
+      <button id="cookie-accept" class="cookie-btn-accept">Rozumím</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
