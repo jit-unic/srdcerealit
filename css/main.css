@@ -161,7 +161,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: transform var(--transition-fast);
 }
 .site-logo:hover .logo-img-wrap { transform: translateY(-1px); }
-.logo-img { height: 34px; width: auto; }
+.logo-img { height: 48px; width: auto; }
 
 .main-nav { display: none; }
 @media (min-width: 1024px) {
