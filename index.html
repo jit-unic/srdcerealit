@@ -13,70 +13,27 @@
   <style>
     /* ── HOMEPAGE ── */
     .hero {
-      position: relative;
-      min-height: 100svh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
       background: var(--ink);
       color: var(--text-inv);
-      overflow: hidden;
       padding: calc(var(--header-h) + 3rem) 0 4rem;
     }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c1/Pohled_z_veze_radnice_na_zizkovo_namesti.jpg');
-      background-size: cover;
-      background-position: 20% 15%;
-      opacity: .38;
-      mask-image: linear-gradient(105deg, transparent 0%, rgba(0,0,0,.4) 35%, #000 70%);
-      -webkit-mask-image: linear-gradient(105deg, transparent 0%, rgba(0,0,0,.4) 35%, #000 70%);
+    .hero-layout { display: grid; gap: 3rem; align-items: center; }
+    .hero-content { min-width: 0; }
+    .hero h1 { color: var(--text-inv); margin: var(--space-5) 0 var(--space-6); font-size: clamp(2.5rem, 4.4vw, 4.5rem); }
+    .hero h1 .accent { display: block; color: #ff626c; }
+    .hero-subtitle { font-size: 1.08rem; color: var(--text-inv-2); max-width: 54ch; line-height: 1.75; margin-bottom: var(--space-8); }
+    .hero-btns { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .hero-stats { border-top: 1px solid var(--line-dark); padding-top: var(--space-8); }
+    .hero-photo { margin: 0; overflow: hidden; border-radius: var(--radius-xl); background: #fff; }
+    .hero-photo img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+    .hero-photo figcaption { padding: .8rem 1.2rem; color: var(--text-2); font-size: .8rem; }
+    @media (min-width: 1100px) {
+      .hero-layout { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
     }
-    .hero-glow {
-      position: absolute;
-      top: -30%;
-      right: -15%;
-      width: 70%;
-      aspect-ratio: 1;
-      background: radial-gradient(circle, rgba(215,32,43,.28), transparent 62%);
-      pointer-events: none;
-    }
-    .hero-grid-pattern {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-      background-size: 56px 56px;
-      mask-image: radial-gradient(ellipse 80% 90% at 30% 40%, #000 20%, transparent 72%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 90% at 30% 40%, #000 20%, transparent 72%);
-      pointer-events: none;
-    }
-    .hero .container { position: relative; z-index: 1; }
-    .hero-content { max-width: 780px; }
-    .hero h1 {
-      color: var(--text-inv);
-      margin: var(--space-5) 0 var(--space-6);
-    }
-    .hero h1 .accent {
-      display: block;
-      background: linear-gradient(100deg, #FF6B72, var(--red-bright) 55%, #C41722);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero-subtitle {
-      font-size: clamp(1rem, 1.7vw, 1.2rem);
-      color: var(--text-inv-2);
-      max-width: 54ch;
-      line-height: 1.75;
-      margin-bottom: var(--space-8);
-    }
-    .hero-btns { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-bottom: clamp(2.5rem, 6vh, 4.5rem); }
-    .hero-stats {
-      border-top: 1px solid var(--line-dark);
-      padding-top: var(--space-8);
+    @media (max-width: 639px) {
+      .hero { padding-top: calc(var(--header-h) + 2rem); }
+      .hero-layout { gap: 2rem; }
+      .hero-btns .btn { width: 100%; }
     }
     .hero-badge {
       display: inline-flex;
@@ -254,10 +211,7 @@
 
 <!-- ══ HERO ══ -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-grid-pattern"></div>
-  <div class="container">
+  <div class="container-wide hero-layout">
     <div class="hero-content">
       <span class="hero-badge">
         <span class="pulse-dot"></span>
@@ -289,6 +243,10 @@
         </div>
       </div>
     </div>
+    <figure class="hero-photo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Pohled_z_veze_radnice_na_zizkovo_namesti.jpg" width="2667" height="1500" alt="Pohled z věže prostějovské radnice na Žižkovo náměstí" fetchpriority="high">
+      <figcaption>Prostějov. Místo, které znám a kde vám pomohu najít domov.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -311,7 +269,7 @@
         <span class="eyebrow animate-on-scroll">Kdo se o vás postará</span>
         <h2 class="display-2 animate-on-scroll" style="margin:var(--space-4) 0 var(--space-5)">Jsem jenom já.<br>Žádné přehazování.</h2>
         <p class="animate-on-scroll">Pracuji na základě praktických zkušeností s prodejem nejrůznějších nemovitostí. Bydlení je jedna z nejdůležitějších lidských potřeb — a koupě či prodej nemovitosti je pro mnohé srdcová záležitost.</p>
-        <p class="animate-on-scroll">Celý obchod vedu od začátku do konce sama. Znáte moje jméno, znáte moji tvář, máte na mě přímé číslo. Kompletní servis zahrnuje právní poradenství ve spolupráci s advokátní kanceláří, znalecké posudky i zajištění financování.</p>
+        <p class="animate-on-scroll">Celý obchod vedu od začátku do konce sama. Znáte moje jméno a máte na mě přímé číslo. Kompletní servis zahrnuje právní poradenství ve spolupráci s advokátní kanceláří, znalecké posudky i zajištění financování.</p>
         <div class="about-values">
           <div class="about-value animate-on-scroll">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
@@ -356,7 +314,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         </div>
         <h3>Odhad tržní ceny</h3>
-        <p>Analýza trhu a stanovení optimální ceny, která přiláká vážné zájemce a maximalizuje váš výnos.</p>
+        <p>Analýza trhu a stanovení optimální ceny, která přiláká vážné zájemce a maximalizuje váš výnos. Cena odhadu se sjednává individuálně podle rozsahu.</p>
       </div>
       <div class="feature-card feature-card-dark animate-on-scroll animate-delay-1">
         <div class="feature-icon">
